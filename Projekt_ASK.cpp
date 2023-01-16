@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 using namespace std;
 
 bool isNextLetterSame(int firstInputIndex, int secondInputIndex, string& firstInput, string& secondInput) {
@@ -11,20 +11,22 @@ void findLongestCommonSubstring(string& firstInput, string& secondInput, string&
 	int maxLength = 0, currentLength = 0, maxLengthIndex;
 	for (int firstInputIndex = 0; firstInputIndex < firstInput.length(); firstInputIndex++) {
 		for (int secondInputIndex = 0; secondInputIndex < secondInput.length(); secondInputIndex++) {
-			while (isNextLetterSame(firstInputIndex + currentLength,
-				secondInputIndex + currentLength,
-				firstInput,
-				secondInput)) {
-				currentLength++;
+			if (firstInput[firstInputIndex] == secondInput[secondInputIndex]) {
+				currentLength = 1;
+				while (isNextLetterSame(firstInputIndex + currentLength,
+					secondInputIndex + currentLength,
+					firstInput,
+					secondInput)) {
+					currentLength++;
+				}
+				if (maxLength < currentLength) {
+					maxLength = currentLength;
+					maxLengthIndex = secondInputIndex + currentLength;
+				}
 			}
-			if (maxLength < currentLength) {
-				maxLength = currentLength;
-				maxLengthIndex = secondInputIndex + currentLength;
-			}
-			currentLength = 0;
 		}
 	}
-	output = secondInput.substr(maxLengthIndex-maxLength, maxLength);
+	output = secondInput.substr(maxLengthIndex - maxLength, maxLength);
 }
 
 char generateRandomChar() {
@@ -41,9 +43,9 @@ int main()
 {
 	srand(time(NULL));
 
-	string firstString = "", secondString = "", longestCommonSubstring = "";
-	generateRandomString(firstString, 15);
-	generateRandomString(secondString, 15);
+	string firstString = "AAAAAA", secondString = "AAAAAAAAA", longestCommonSubstring = "";
+//	generateRandomString(firstString, 15);
+//	generateRandomString(secondString, 15);
 
 	cout << firstString << endl;
 	cout << secondString << endl;
