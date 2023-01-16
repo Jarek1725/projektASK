@@ -1,5 +1,27 @@
 ﻿#include <iostream>
+#include <vector>
+
 using namespace std;
+
+void findLongestCommonSubstringOptimal(string& firstInput, string& secondInput, string& output) {
+	int maxLength = 0;
+	vector<vector<int>> L(firstInput.length()+1, vector<int>(secondInput.length()+1, 0));
+
+	for (int firstInputIndex = 0; firstInputIndex < firstInput.length(); firstInputIndex++)
+		for (int secondInputIndex = 0; secondInputIndex < secondInput.length(); secondInputIndex++)
+			if (firstInput[firstInputIndex] != secondInput[secondInputIndex]) L[firstInputIndex + 1][secondInputIndex + 1] = 0;
+			else
+			{
+				L[firstInputIndex + 1][secondInputIndex + 1] = 1 + L[firstInputIndex][secondInputIndex];
+				if (L[firstInputIndex + 1][secondInputIndex + 1] > maxLength)
+				{
+					maxLength = L[firstInputIndex + 1][secondInputIndex + 1];
+				}
+			}
+
+	cout << maxLength << endl;
+}
+
 
 bool isNextLetterSame(int firstInputIndex, int secondInputIndex, string& firstInput, string& secondInput) {
 	return 	(firstInputIndex < firstInput.length() &&
@@ -7,7 +29,7 @@ bool isNextLetterSame(int firstInputIndex, int secondInputIndex, string& firstIn
 		firstInput[firstInputIndex] == secondInput[secondInputIndex]);
 }
 
-void findLongestCommonSubstring(string& firstInput, string& secondInput, string& output) {
+void findLongestCommonSubstringNotOptimal(string& firstInput, string& secondInput, string& output) {
 	int maxLength = 0, currentLength = 0, maxLengthIndex;
 	for (int firstInputIndex = 0; firstInputIndex < firstInput.length(); firstInputIndex++) {
 		for (int secondInputIndex = 0; secondInputIndex < secondInput.length(); secondInputIndex++) {
@@ -30,7 +52,7 @@ void findLongestCommonSubstring(string& firstInput, string& secondInput, string&
 }
 
 char generateRandomChar() {
-	return 'A' + rand() % 26;
+	return 'A';
 }
 
 void generateRandomString(string& input, int length) {
@@ -43,14 +65,21 @@ int main()
 {
 	srand(time(NULL));
 
-	string firstString = "AAAAAA", secondString = "AAAAAAAAA", longestCommonSubstring = "";
-//	generateRandomString(firstString, 15);
-//	generateRandomString(secondString, 15);
+	string firstString = "", secondString = "", longestCommonSubstringNotOptimal = "", longestCommonSubstringOptimal;
+	generateRandomString(firstString, 1500);
+	generateRandomString(secondString, 1500);
 
-	cout << firstString << endl;
-	cout << secondString << endl;
+//	cout << firstString << endl;
+//	cout << secondString << endl;
 
-	findLongestCommonSubstring(firstString, secondString, longestCommonSubstring);
 
-	cout << longestCommonSubstring << endl;
+	clock_t tStart1 = clock();
+	findLongestCommonSubstringNotOptimal(firstString, secondString, longestCommonSubstringNotOptimal);
+	printf("Time taken: %.2fs\n", (double)(clock() - tStart1) / CLOCKS_PER_SEC);
+	cout << longestCommonSubstringNotOptimal.length() << endl;
+
+	clock_t tStart2 = clock();
+	findLongestCommonSubstringOptimal(firstString, secondString, longestCommonSubstringOptimal);
+	printf("Time taken: %.2fs\n", (double)(clock() - tStart2) / CLOCKS_PER_SEC);
+
 }
