@@ -52,7 +52,7 @@ void findLongestCommonSubstringNotOptimal(string& firstInput, string& secondInpu
 }
 
 char generateRandomChar() {
-	return 'A';
+	return 'A' + rand()%26;
 }
 
 void generateRandomString(string& input, int length) {
@@ -66,8 +66,8 @@ int main()
 	srand(time(NULL));
 
 	string firstString = "", secondString = "", longestCommonSubstringNotOptimal = "", longestCommonSubstringOptimal;
-	generateRandomString(firstString, 1500);
-	generateRandomString(secondString, 1500);
+	generateRandomString(firstString, 50000);
+	generateRandomString(secondString, 50000);
 
 //	cout << firstString << endl;
 //	cout << secondString << endl;
