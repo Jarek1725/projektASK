@@ -5,11 +5,13 @@ using namespace std;
 
 void findLongestCommonSubstringOptimal(string& firstInput, string& secondInput, string& output) {
 	int maxLength = 0;
-	vector<vector<int>> L(firstInput.length()+1, vector<int>(secondInput.length()+1, 0));
+	vector<vector<int>> L(firstInput.length() + 1, vector<int>(secondInput.length() + 1, 0));
 
 	for (int firstInputIndex = 0; firstInputIndex < firstInput.length(); firstInputIndex++)
 		for (int secondInputIndex = 0; secondInputIndex < secondInput.length(); secondInputIndex++)
-			if (firstInput[firstInputIndex] != secondInput[secondInputIndex]) L[firstInputIndex + 1][secondInputIndex + 1] = 0;
+			if (firstInput[firstInputIndex] != secondInput[secondInputIndex]) {
+				L[firstInputIndex + 1][secondInputIndex + 1] = 0;
+			}
 			else
 			{
 				L[firstInputIndex + 1][secondInputIndex + 1] = 1 + L[firstInputIndex][secondInputIndex];
@@ -52,7 +54,7 @@ void findLongestCommonSubstringNotOptimal(string& firstInput, string& secondInpu
 }
 
 char generateRandomChar() {
-	return 'A' + rand()%26;
+	return 'A' + rand() % 1;
 }
 
 void generateRandomString(string& input, int length) {
@@ -66,11 +68,11 @@ int main()
 	srand(time(NULL));
 
 	string firstString = "", secondString = "", longestCommonSubstringNotOptimal = "", longestCommonSubstringOptimal;
-	generateRandomString(firstString, 50000);
-	generateRandomString(secondString, 50000);
+	generateRandomString(firstString, 5000);
+	generateRandomString(secondString, 5000);
 
-//	cout << firstString << endl;
-//	cout << secondString << endl;
+	//	cout << firstString << endl;
+	//	cout << secondString << endl;
 
 
 	clock_t tStart1 = clock();
