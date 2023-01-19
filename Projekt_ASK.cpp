@@ -5,6 +5,7 @@ using namespace std;
 
 void findLongestCommonSubstringOptimal(string& firstInput, string& secondInput, string& output) {
 	int maxLength = 0;
+	int maxLengthIndex = 0;
 	vector<vector<int>> L(firstInput.length() + 1, vector<int>(secondInput.length() + 1, 0));
 
 	for (int firstInputIndex = 0; firstInputIndex < firstInput.length(); firstInputIndex++){
@@ -18,10 +19,12 @@ void findLongestCommonSubstringOptimal(string& firstInput, string& secondInput, 
 				if (L[firstInputIndex + 1][secondInputIndex + 1] > maxLength)
 				{
 					maxLength = L[firstInputIndex + 1][secondInputIndex + 1];
+					maxLengthIndex = firstInputIndex + 1;
 				}
 			}
 		}
 	}
+	output = firstInput.substr(maxLengthIndex - maxLength, maxLength);
 }
 
 
@@ -68,8 +71,8 @@ int main()
 	srand(time(NULL));
 
 	string firstString = "", secondString = "", longestCommonSubstringNotOptimal = "", longestCommonSubstringOptimal;
-	generateRandomString(firstString, 5000);
-	generateRandomString(secondString, 5000);
+	generateRandomString(firstString, 500);
+	generateRandomString(secondString, 500);
 
 //	cout << firstString << endl;
 //	cout << secondString << endl;
@@ -78,12 +81,14 @@ int main()
 	clock_t tStart1 = clock();
 	findLongestCommonSubstringNotOptimal(firstString, secondString, longestCommonSubstringNotOptimal);
 	printf("Dlugosc najdluzszego wspolnego podslowa: %d\n", longestCommonSubstringNotOptimal.length());
+	cout << longestCommonSubstringNotOptimal << endl;
 	double notOptimalTime = (double)(clock() - tStart1) / CLOCKS_PER_SEC;
 	printf("Czas wykonania nieoptymalnym sposobem: %.2fs\n", notOptimalTime);
 
 	clock_t tStart2 = clock();
 	findLongestCommonSubstringOptimal(firstString, secondString, longestCommonSubstringOptimal);
 	printf("Dlugosc najdluzszego wspolnego podslowa: %d\n", longestCommonSubstringOptimal.length());
+	cout << longestCommonSubstringOptimal << endl;
 	double optimalTime = (double)(clock() - tStart2) / CLOCKS_PER_SEC;
 	printf("Czas wykonania optymalnym sposobem: %.2fs\n", optimalTime);
 
